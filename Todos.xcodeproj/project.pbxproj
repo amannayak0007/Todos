@@ -16,8 +16,6 @@
 		277A224718F0E220001C3461 /* TodosAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A224618F0E220001C3461 /* TodosAppDelegate.m */; };
 		277A224A18F0E220001C3461 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 277A224818F0E220001C3461 /* Main.storyboard */; };
 		277A224D18F0E220001C3461 /* Todos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 277A224B18F0E220001C3461 /* Todos.xcdatamodeld */; };
-		277A225018F0E220001C3461 /* TodosMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A224F18F0E220001C3461 /* TodosMasterViewController.m */; };
-		277A225318F0E220001C3461 /* TodosDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A225218F0E220001C3461 /* TodosDetailViewController.m */; };
 		277A225518F0E220001C3461 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 277A225418F0E220001C3461 /* Images.xcassets */; };
 		277A225C18F0E220001C3461 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277A225B18F0E220001C3461 /* XCTest.framework */; };
 		277A225D18F0E220001C3461 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277A223418F0E21F001C3461 /* Foundation.framework */; };
@@ -25,6 +23,9 @@
 		277A225F18F0E220001C3461 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277A223A18F0E220001C3461 /* CoreData.framework */; };
 		277A226718F0E220001C3461 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 277A226518F0E220001C3461 /* InfoPlist.strings */; };
 		277A226918F0E220001C3461 /* TodosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A226818F0E220001C3461 /* TodosTests.m */; };
+		277A227A18F0E948001C3461 /* TasksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A227918F0E948001C3461 /* TasksTableViewController.m */; };
+		277A227D18F0EA0B001C3461 /* TaskDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A227C18F0EA0B001C3461 /* TaskDetailTableViewController.m */; };
+		27ADE6B218F0F6A700A0E4BD /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ADE6B118F0F6A700A0E4BD /* Task.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,16 +52,18 @@
 		277A224618F0E220001C3461 /* TodosAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodosAppDelegate.m; sourceTree = "<group>"; };
 		277A224918F0E220001C3461 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		277A224C18F0E220001C3461 /* Todos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Todos.xcdatamodel; sourceTree = "<group>"; };
-		277A224E18F0E220001C3461 /* TodosMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodosMasterViewController.h; sourceTree = "<group>"; };
-		277A224F18F0E220001C3461 /* TodosMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodosMasterViewController.m; sourceTree = "<group>"; };
-		277A225118F0E220001C3461 /* TodosDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodosDetailViewController.h; sourceTree = "<group>"; };
-		277A225218F0E220001C3461 /* TodosDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodosDetailViewController.m; sourceTree = "<group>"; };
 		277A225418F0E220001C3461 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		277A225A18F0E220001C3461 /* TodosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		277A225B18F0E220001C3461 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		277A226418F0E220001C3461 /* TodosTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TodosTests-Info.plist"; sourceTree = "<group>"; };
 		277A226618F0E220001C3461 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		277A226818F0E220001C3461 /* TodosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodosTests.m; sourceTree = "<group>"; };
+		277A227818F0E948001C3461 /* TasksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksTableViewController.h; sourceTree = "<group>"; };
+		277A227918F0E948001C3461 /* TasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksTableViewController.m; sourceTree = "<group>"; };
+		277A227B18F0EA0B001C3461 /* TaskDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDetailTableViewController.h; sourceTree = "<group>"; };
+		277A227C18F0EA0B001C3461 /* TaskDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailTableViewController.m; sourceTree = "<group>"; };
+		27ADE6B018F0F6A700A0E4BD /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		27ADE6B118F0F6A700A0E4BD /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,11 +129,13 @@
 				277A224518F0E220001C3461 /* TodosAppDelegate.h */,
 				277A224618F0E220001C3461 /* TodosAppDelegate.m */,
 				277A224818F0E220001C3461 /* Main.storyboard */,
-				277A224E18F0E220001C3461 /* TodosMasterViewController.h */,
-				277A224F18F0E220001C3461 /* TodosMasterViewController.m */,
-				277A225118F0E220001C3461 /* TodosDetailViewController.h */,
-				277A225218F0E220001C3461 /* TodosDetailViewController.m */,
+				277A227B18F0EA0B001C3461 /* TaskDetailTableViewController.h */,
+				277A227C18F0EA0B001C3461 /* TaskDetailTableViewController.m */,
+				277A227818F0E948001C3461 /* TasksTableViewController.h */,
+				277A227918F0E948001C3461 /* TasksTableViewController.m */,
 				277A225418F0E220001C3461 /* Images.xcassets */,
+				27ADE6B018F0F6A700A0E4BD /* Task.h */,
+				27ADE6B118F0F6A700A0E4BD /* Task.m */,
 				277A224B18F0E220001C3461 /* Todos.xcdatamodeld */,
 				277A223D18F0E220001C3461 /* Supporting Files */,
 			);
@@ -265,9 +270,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				277A224718F0E220001C3461 /* TodosAppDelegate.m in Sources */,
+				277A227A18F0E948001C3461 /* TasksTableViewController.m in Sources */,
 				277A224D18F0E220001C3461 /* Todos.xcdatamodeld in Sources */,
-				277A225318F0E220001C3461 /* TodosDetailViewController.m in Sources */,
-				277A225018F0E220001C3461 /* TodosMasterViewController.m in Sources */,
+				277A227D18F0EA0B001C3461 /* TaskDetailTableViewController.m in Sources */,
+				27ADE6B218F0F6A700A0E4BD /* Task.m in Sources */,
 				277A224318F0E220001C3461 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +479,7 @@
 				277A226E18F0E220001C3461 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		277A226F18F0E220001C3461 /* Build configuration list for PBXNativeTarget "TodosTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +488,7 @@
 				277A227118F0E220001C3461 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

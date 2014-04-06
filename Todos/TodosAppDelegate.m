@@ -8,7 +8,7 @@
 
 #import "TodosAppDelegate.h"
 
-#import "TodosMasterViewController.h"
+#import "TasksTableViewController.h"
 
 @implementation TodosAppDelegate
 
@@ -20,7 +20,7 @@
 {
     // Override point for customization after application launch.
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    TodosMasterViewController *controller = (TodosMasterViewController *)navigationController.topViewController;
+    TasksTableViewController *controller = (TasksTableViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
     return YES;
 }
