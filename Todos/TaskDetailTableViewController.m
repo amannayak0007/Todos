@@ -9,12 +9,15 @@
 #import "TaskDetailTableViewController.h"
 
 
-@interface TaskDetailTableViewController ()
+@interface TaskDetailTableViewController () <UITextViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
 @property (weak, nonatomic) IBOutlet UILabel *creationDateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *prioritySegment;
 @property (weak, nonatomic) IBOutlet UITextView *noteTV;
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *creationDateCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *dueDateCell;
 
 @property (nonatomic, strong) NSDate *creationDate;
 @property (nonatomic, strong) NSDate *dueDate;
@@ -23,8 +26,25 @@
 
 @implementation TaskDetailTableViewController
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (textView == self.noteTV) {
+        if ([text isEqualToString:@"\n"]) {
+            [textView resignFirstResponder];
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.delegate = self;
     if (self.task) {
         self.title = self.task.title;
     }
@@ -38,7 +58,9 @@
     self.nameTF.text = self.task.title;
     
     // Task priority
-    self.prioritySegment.selectedSegmentIndex = [self.task.priority intValue];
+    if (self.task) {
+        self.prioritySegment.selectedSegmentIndex = [self.task.priority intValue];
+    }
     
     // Task creation and due date
     self.creationDateLabel.text = [formatter stringFromDate:self.creationDate];
@@ -51,6 +73,8 @@
         self.noteTV.text = self.task.note;
     }
     
+    self.nameTF.delegate = self;
+    self.noteTV.delegate = self;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -90,4 +114,11 @@
     task.note = self.noteTV.text;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"TAP");
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell == self.creationDateCell || cell == self.dueDateCell) {
+        NSLog(@"Tapped");
+    }
+}
 @end

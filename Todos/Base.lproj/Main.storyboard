@@ -86,11 +86,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name goes here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lVE-Is-rwY">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name goes here..." minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lVE-Is-rwY">
                                                     <rect key="frame" x="20" y="7" width="280" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -129,7 +129,7 @@
                             </tableViewSection>
                             <tableViewSection id="wyb-KW-ohJ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="t4d-SX-6W4" detailTextLabel="SVv-2x-FEW" style="IBUITableViewCellStyleValue2" id="ZGt-my-d9D">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="t4d-SX-6W4" detailTextLabel="SVv-2x-FEW" style="IBUITableViewCellStyleValue2" id="ZGt-my-d9D">
                                         <rect key="frame" x="0.0" y="247" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZGt-my-d9D" id="XzW-fC-KDi">
@@ -153,7 +153,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="4Bo-w2-NYv" detailTextLabel="Iyp-o5-M39" style="IBUITableViewCellStyleValue2" id="jO4-82-FV6">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="4Bo-w2-NYv" detailTextLabel="Iyp-o5-M39" style="IBUITableViewCellStyleValue2" id="jO4-82-FV6">
                                         <rect key="frame" x="0.0" y="291" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jO4-82-FV6" id="xPe-7K-tb3">
@@ -193,7 +193,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -215,7 +215,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="creationDateCell" destination="ZGt-my-d9D" id="QW7-Mo-hA2"/>
                         <outlet property="creationDateLabel" destination="SVv-2x-FEW" id="KBb-XA-geo"/>
+                        <outlet property="dueDateCell" destination="jO4-82-FV6" id="WJa-1d-8Nb"/>
                         <outlet property="dueDateLabel" destination="Iyp-o5-M39" id="lD1-JK-fiX"/>
                         <outlet property="nameTF" destination="lVE-Is-rwY" id="dYi-3K-5KZ"/>
                         <outlet property="noteTV" destination="oUf-vG-j6U" id="4JQ-HL-V0s"/>

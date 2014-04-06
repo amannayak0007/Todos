@@ -12,7 +12,7 @@
 
 @interface TasksTableViewController ()
 
-@property (nonatomic, strong) NSArray *tasks;
+@property (nonatomic, strong) NSMutableArray *tasks;
 
 @end
 
@@ -27,7 +27,7 @@
 
 - (void)refresh {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
-    self.tasks = [self.managedObjectContext executeFetchRequest:request error:nil];
+    self.tasks = [[self.managedObjectContext executeFetchRequest:request error:nil] mutableCopy];
     [self.tableView reloadData];
 }
 
@@ -36,29 +36,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return @"high";
-            break;
-        case 1:
-            return @"medium";
-            break;
-        case 2:
-            return @"low";
-            break;
-        default:
-            break;
-    }
+//    switch (section) {
+//        case 0:
+//            return @"high";
+//            break;
+//        case 1:
+//            return @"medium";
+//            break;
+//        case 2:
+//            return @"low";
+//            break;
+//        default:
+//            break;
+//    }
     return nil;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSArray *)tasksBySection:(NSInteger)section {
     int priority;
     switch (section) {
         case 0:
@@ -74,16 +73,22 @@
             break;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority == %i", priority];
-    NSArray *tasks = [self.tasks filteredArrayUsingPredicate:predicate];
-    
-    return tasks.count;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority = %i", priority];
+    return [self.tasks filteredArrayUsingPredicate:predicate];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self tasksBySection:section].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Task Cell" forIndexPath:indexPath];
-    Task *task = [self.tasks objectAtIndex:indexPath.row];
+    
+    NSArray *tasks = [self tasksBySection:indexPath.section];
+    
+    Task *task = [tasks objectAtIndex:indexPath.row];
     cell.textLabel.text = task.title;
     
     return cell;
@@ -98,18 +103,25 @@
 }
 */
 
-/*
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        NSArray *tasks = [self tasksBySection:indexPath.section];
+        Task *task = [tasks objectAtIndex:indexPath.row];
+        
+
+        [self.managedObjectContext deleteObject:task];
+        [self.tasks removeObject:tasks];
+        [self.tableView reloadData];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
 /*
 // Override to support rearranging the table view.
@@ -136,7 +148,8 @@
     TaskDetailTableViewController *taskVC = segue.destinationViewController;
     if ([sender isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Task *task = [self.tasks objectAtIndex:indexPath.row];
+        NSArray *tasks = [self tasksBySection:indexPath.section];
+        Task *task = [tasks objectAtIndex:indexPath.row];
         taskVC.task = task;
     }
     taskVC.managedObjectContext = self.managedObjectContext;
