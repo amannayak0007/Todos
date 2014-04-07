@@ -10,19 +10,49 @@
 #import "TaskDetailTableViewController.h"
 #import "Task.h"
 
-@interface TasksTableViewController ()
+@interface TasksTableViewController () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *tasks;
+@property (nonatomic, strong) NSFetchedResultsController *fetchController;
 
 @end
 
 @implementation TasksTableViewController
 
+- (NSFetchedResultsController *)fetchController {
+    if (_fetchController) {
+        return _fetchController;
+    }
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
+    
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:@"priority" ascending:NO];
+    
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    
+    [fetchRequest setFetchBatchSize:20];
+    
+    _fetchController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                           managedObjectContext:self.managedObjectContext
+                                                             sectionNameKeyPath:nil
+                                                                      cacheName:@"Root"];
+
+    _fetchController.delegate = self;
+    
+    return _fetchController;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.fetchController performFetch:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [self refresh];
+    [self.fetchController performFetch:nil];
+//    [self refresh];
 }
 
 - (void)refresh {
@@ -36,24 +66,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.fetchController.sections.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-//    switch (section) {
-//        case 0:
-//            return @"high";
-//            break;
-//        case 1:
-//            return @"medium";
-//            break;
-//        case 2:
-//            return @"low";
-//            break;
-//        default:
-//            break;
-//    }
     return nil;
 }
 
@@ -79,42 +96,33 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self tasksBySection:section].count;
+    id sectionInfo = [self.fetchController.sections objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Task *task = [self.fetchController objectAtIndexPath:indexPath];
+    cell.textLabel.text = task.title;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Task Cell" forIndexPath:indexPath];
     
-    NSArray *tasks = [self tasksBySection:indexPath.section];
-    
-    Task *task = [tasks objectAtIndex:indexPath.row];
-    cell.textLabel.text = task.title;
+    [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        NSArray *tasks = [self tasksBySection:indexPath.section];
-        Task *task = [tasks objectAtIndex:indexPath.row];
+        Task *task = [self.tasks objectAtIndex:indexPath.row];
         
 
         [self.managedObjectContext deleteObject:task];
-        [self.tasks removeObject:tasks];
-        [self.tableView reloadData];
+        [self.tasks removeObject:task];
         
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
@@ -139,6 +147,59 @@
 }
 */
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    [self.tableView endUpdates];
+}
 
 #pragma mark - Navigation
 
@@ -148,8 +209,7 @@
     TaskDetailTableViewController *taskVC = segue.destinationViewController;
     if ([sender isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSArray *tasks = [self tasksBySection:indexPath.section];
-        Task *task = [tasks objectAtIndex:indexPath.row];
+        Task *task = [self.tasks objectAtIndex:indexPath.row];
         taskVC.task = task;
     }
     taskVC.managedObjectContext = self.managedObjectContext;

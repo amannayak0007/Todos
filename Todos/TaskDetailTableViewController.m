@@ -7,6 +7,7 @@
 //
 
 #import "TaskDetailTableViewController.h"
+#import "DatePickerTableViewController.h"
 
 
 @interface TaskDetailTableViewController () <UITextViewDelegate, UITextFieldDelegate>
@@ -26,6 +27,10 @@
 
 @implementation TaskDetailTableViewController
 
+- (IBAction)priorityChanged:(id)sender {
+    [self.view endEditing:YES];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
@@ -33,22 +38,20 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (textView == self.noteTV) {
-        if ([text isEqualToString:@"\n"]) {
-            [textView resignFirstResponder];
-            return NO;
-        }
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
     }
     return YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.delegate = self;
     if (self.task) {
         self.title = self.task.title;
     }
     
+    // Handle dates
     self.creationDate = self.task.creationDate ? self.task.creationDate : [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateStyle = NSDateFormatterMediumStyle;
@@ -76,11 +79,17 @@
     self.nameTF.delegate = self;
     self.noteTV.delegate = self;
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+//    [self.view addGestureRecognizer:tap];
+    
+//    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+//    datePicker.datePickerMode = UIDatePickerModeDate;
+//    [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+////    datePicker.tag = indexPath.row;
+//    self.creationDateCell.textLabel.inputView = datePicker;
 }
 
-- (void)dismissKeyboard {
+- (void)dismissKeyboard:(id)sender {
     [self.view endEditing:YES];
 }
 
@@ -115,10 +124,27 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"TAP");
+    [self.view endEditing:YES];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if (cell == self.creationDateCell || cell == self.dueDateCell) {
-        NSLog(@"Tapped");
+    if (cell == self.dueDateCell) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
+        UITableViewCell *dateCell = [self.tableView cellForRowAtIndexPath:nextIndexPath];
+        [UIView transitionWithView:dateCell duration:1 options:UIViewAnimationOptionTransitionCrossDissolve animations:NULL completion:NULL];
+        dateCell.hidden = NO;
     }
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    DatePickerTableViewController *datePickerVC = segue.destinationViewController;
+    if (sender == self.creationDateCell) {
+        datePickerVC.title = self.creationDateCell.textLabel.text;
+        datePickerVC.date = self.creationDate;
+        
+    } else if (sender == self.dueDateCell) {
+        datePickerVC.title = self.dueDateCell.textLabel.text;
+        datePickerVC.date = self.dueDate;
+    }
+    
+}
+
 @end

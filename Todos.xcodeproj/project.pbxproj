@@ -26,6 +26,7 @@
 		277A227A18F0E948001C3461 /* TasksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A227918F0E948001C3461 /* TasksTableViewController.m */; };
 		277A227D18F0EA0B001C3461 /* TaskDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A227C18F0EA0B001C3461 /* TaskDetailTableViewController.m */; };
 		27ADE6B218F0F6A700A0E4BD /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ADE6B118F0F6A700A0E4BD /* Task.m */; };
+		27AFFF1B18F1ED4100F895F1 /* DatePickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AFFF1A18F1ED4100F895F1 /* DatePickerTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		277A227C18F0EA0B001C3461 /* TaskDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskDetailTableViewController.m; sourceTree = "<group>"; };
 		27ADE6B018F0F6A700A0E4BD /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		27ADE6B118F0F6A700A0E4BD /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		27AFFF1918F1ED4100F895F1 /* DatePickerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerTableViewController.h; sourceTree = "<group>"; };
+		27AFFF1A18F1ED4100F895F1 /* DatePickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				277A224518F0E220001C3461 /* TodosAppDelegate.h */,
 				277A224618F0E220001C3461 /* TodosAppDelegate.m */,
 				277A224818F0E220001C3461 /* Main.storyboard */,
+				27AFFF1918F1ED4100F895F1 /* DatePickerTableViewController.h */,
+				27AFFF1A18F1ED4100F895F1 /* DatePickerTableViewController.m */,
 				277A227B18F0EA0B001C3461 /* TaskDetailTableViewController.h */,
 				277A227C18F0EA0B001C3461 /* TaskDetailTableViewController.m */,
 				277A227818F0E948001C3461 /* TasksTableViewController.h */,
@@ -275,6 +280,7 @@
 				277A227D18F0EA0B001C3461 /* TaskDetailTableViewController.m in Sources */,
 				27ADE6B218F0F6A700A0E4BD /* Task.m in Sources */,
 				277A224318F0E220001C3461 /* main.m in Sources */,
+				27AFFF1B18F1ED4100F895F1 /* DatePickerTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
